@@ -7,7 +7,7 @@
 set nocompatible
 " detection:ON
 " plugin:ON
-" indent:ON 	
+" indent:ON	
 filetype off
 " 设置鼠标模式
 " 可设置模式有:
@@ -19,17 +19,17 @@ filetype off
 " a all previous modes
 " r for |hit-enter| and |more-prompt| prompt
 set mouse=v
-" 是否忽略大小写设置
-set ignorecase
-set autoread " 自动刷新保存文件
-set tags=tags; "自动向父目录找tag 
+set ignorecase "是否忽略大小写设置
+set autoread "自动刷新保存文件
+set tags=tags; "自动向父目录找tag
+set nu "显示行号
+set ts=8 "设置tab键为8个空格
 set autochdir
-set nu
 set encoding=utf-8
 set cursorcolumn
 set cursorline
 set showmatch
-set ignorecase "搜索时忽略大小写 
+set ignorecase "搜索时忽略大小写
 set hlsearch "高亮显示结果
 set backspace=indent,eol,start " the backspace can't delete
 set foldmethod=indent " Enable folding
@@ -71,7 +71,7 @@ call vundle#begin()
 " vim plugin manager
 Plugin 'gmarik/Vundle.vim'
 
-" code complete 
+" code complete
 Plugin 'Valloric/YouCompleteMe'
 
 " vim code color
@@ -98,13 +98,13 @@ map <F4> <leader>ci <CR>
 " 注释的时候自动加个空格, 强迫症必配
 let g:NERDSpaceDelims=1
 
-" git support 
+" git support
 " Plugin 'tpope/vim-fugitive'
 
 " super search
 Plugin 'kien/ctrlp.vim'
 
-" status 
+" status
 " Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " tagbar to gotags(ctags)
@@ -126,10 +126,10 @@ Plugin 'fatih/vim-go'
 " Plugin 'python.vim'
 
 " python check pep8
-" Plugin 'nvie/vim-flake8'
+Plugin 'nvie/vim-flake8'
 
 " python autopep8
-" Plugin 'tell-k/vim-autopep8'
+Plugin 'tell-k/vim-autopep8'
 
 " python auto complete
 " Plugin 'Pydiction'
@@ -138,7 +138,8 @@ Plugin 'fatih/vim-go'
 " Plugin 'klen/Python-mode'
 
 " code fold python 代码折叠
-" Plugin 'tmhedberg/SimpylFold'
+Plugin 'tmhedberg/SimpylFold'
+let g:SimpylFold_docstring_preview=1
 
 " indentLine 代码缩进标识
 " Plugin 'Yggdroot/indentLine'
@@ -160,7 +161,7 @@ if has('gui_running') " vim code color
         colorscheme solarized
 else
         " colorscheme zenburn
-        colorscheme molokai  
+        colorscheme molokai
  	"let g:molokai_original = 1
         " if vim is working without gui the t_Co must be set
         set t_Co=256
@@ -200,16 +201,26 @@ let g:tagbar_type_go = {
 let g:tagbar_autofocus = 1
 
 " python 配置块
-" let python_highlight_all=1
-" au BufNewFile,BufRead *.py set tabstop=4 |
-"            \set softtabstop=4 |
-"            \set shiftwidth=4 |
-"            \set textwidth=79 |
-"            \set expandtab |
-"            \set autoindent |
-"            \set fileformat=unix
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+let python_highlight_all=1
+au BufNewFile,BufRead *.py set tabstop=4 |
+           \set softtabstop=4 |
+           \set shiftwidth=4 |
+           \set textwidth=79 |
+           \set expandtab |
+           \set autoindent |
+           \set fileformat=unix
 
-" autocmd BufWritePost *.py call Flake8()
+" 支持virtualenv环境
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
 
 " let g:pydiction_location='.vim/bundle/Pydiction/complete-dict'
 
@@ -259,21 +270,24 @@ let g:tagbar_autofocus = 1
 
 
 " autopep8设置"
-" let g:autopep8_disable_show_diff=1
+let g:autopep8_disable_show_diff=1
 " 按F5运行python"
-" map <F8> :Autopep8<CR>
-" map <F5> :Autopep8<CR> :w<CR> :call RunPython()<CR>
-"function RunPython()
-	"let mp = &makeprg
-	"let ef = &errorformat
-            "let exeFile = expand("%:t")
-              "setlocal makeprg=python\ -u
-        "set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-        "silent make %
-        "copen
-        "let &makeprg = mp
-              "let &errorformat = ef
-"endfunction
+map <F8> :Autopep8<CR>
+map <F5> :Autopep8<CR> :w<CR> :call RunPython()<CR>
+function RunPython()
+	let mp = &makeprg
+	let ef = &errorformat
+        let exeFile = expand("%:t")
+        setlocal makeprg=python\ -u
+        set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+        silent make %
+        copen
+        let &makeprg = mp
+        let &errorformat = ef
+endfunction
+
+" PEP8 代码风格检查
+autocmd BufWritePost *.py call Flake8()
 
 " ################### 自动补全 ###################
 " 重启 :YcmRestartServer
