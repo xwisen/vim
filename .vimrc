@@ -19,6 +19,8 @@ filetype off
 " a all previous modes
 " r for |hit-enter| and |more-prompt| prompt
 set mouse=v
+" diff 模式
+" set diff
 set ignorecase "是否忽略大小写设置
 set autoread "自动刷新保存文件
 set tags=tags; "自动向父目录找tag
@@ -135,7 +137,7 @@ Plugin 'tell-k/vim-autopep8'
 " Plugin 'Pydiction'
 
 " python mode
-" Plugin 'klen/Python-mode'
+Plugin 'klen/Python-mode'
 
 " code fold python 代码折叠
 Plugin 'tmhedberg/SimpylFold'
@@ -237,36 +239,36 @@ EOF
 " ]]            Jump on next class or function (normal, visual, operator modes)
 " [M            Jump on previous class or method (normal, visual, operator modes)
 " ]M            Jump on next class or method (normal, visual, operator modes)
-" let g:pymode_rope = 1
+let g:pymode_rope = 1
 
 " Documentation
-" let g:pymode_doc = 1
-" let g:pymode_doc_key = 'K'
+let g:pymode_doc = 1
+let g:pymode_doc_key = 'K'
 
 " Linting
-" let g:pymode_lint = 1
-" let g:pymode_lint_checker = "pyflakes,pep8"
+let g:pymode_lint = 1
+let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
-" let g:pymode_lint_write = 1
+let g:pymode_lint_write = 1
 
 " Support virtualenv
-" let g:pymode_virtualenv = 1
+let g:pymode_virtualenv = 1
 
 " Enable breakpoints plugin
-" let g:pymode_breakpoint = 1
-" let g:pymode_breakpoint_bind = '<leader>b'
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_bind = '<leader>b'
 
 " syntax highlighting
-" let g:pymode_syntax = 1
-" let g:pymode_syntax_all = 1
-" let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-" let g:pymode_syntax_space_errors = g:pymode_syntax_all
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Don't autofold code
 " let g:pymode_folding = 0
 
 " go to definition
-" let g:pymode_rope_goto_definition_bind = 'gd'
+let g:pymode_rope_goto_definition_bind = 'gd'
 
 
 " autopep8设置"
@@ -347,12 +349,12 @@ func SetComment()
 		call append(9, '//***********************************************')
 		call append(10, '')
 	elseif expand("%:e") == 'py'
-		call setline(1, '#!/usr/bin/python ')
-       call append(1, '# -*- coding: utf-8 -*-  ')
-		call append(2, '# ')
-		call append(3, '#       Filename: '.expand("%"))
-		call append(4, '# ')
-		call append(5, '#         Author: xwisen 1031649164@qq.com')
+		call setline(1, '#!/usr/bin/python')
+       call append(1, '# -*- coding: utf-8 -*-')
+		call append(2, '#')
+		call append(3, '#      Filename: '.expand("%"))
+		call append(4, '#')
+		call append(5, '#        Author: xwisen 1031649164@qq.com')
 		call append(6, '#    Description: ---')
 		call append(7, '#         Create: '.strftime("%Y-%m-%d %H:%M:%S"))
 		call append(8, '#  Last Modified: '.strftime("%Y-%m-%d %H:%M:%S"))
@@ -362,9 +364,9 @@ func SetComment()
 	elseif expand("%:e") == 'sh'
 		call setline(1, '#!/bin/bash ')
 		call append(1, '# ***********************************************')
-		call append(2, '# ')
+		call append(2, '#')
 		call append(3, '#       Filename: '.expand("%"))
-		call append(4, '# ')
+		call append(4, '#')
 		call append(5, '#         Author: xwisen 1031649164@qq.com')
 		call append(6, '#    Description: ---')
 		call append(7, '#         Create: '.strftime("%Y-%m-%d %H:%M:%S"))
